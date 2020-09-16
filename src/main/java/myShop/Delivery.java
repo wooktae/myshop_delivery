@@ -14,13 +14,20 @@ public class Delivery {
     private Long orderId;
     private String status;
 
-    @PostPersist
+    @PrePersist
     public void onPostPersist(){
         Shipped shipped = new Shipped();
         BeanUtils.copyProperties(this, shipped);
         shipped.publishAfterCommit();
 
 
+        myShop.external.Notice notice = new myShop.external.Notice();
+        // mappings goes here
+        notice.setOrderId(this.getOrderId());
+        notice.setNotiStatus("Notice Send");
+
+        DeliveryApplication.applicationContext.getBean(myShop.external.NoticeService.class)
+                .noticeRequest(notice);
     }
 
 

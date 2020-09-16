@@ -37,6 +37,9 @@ logging:
     org.springframework.cloud: debug
 server:
   port: 8082
+api:
+  url:
+    notice: http://localhost:8084
 ---
 
 spring:
@@ -62,3 +65,7 @@ spring:
         event-out:
           destination: myShop
           contentType: application/json
+
+api:
+  url:
+    notice: http://notice:8080
